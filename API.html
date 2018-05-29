@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<title>Cadastrar Cliente</title>
+</head>
+<body>
+
+
+
+<main role="main" class="container">
+
+      <div class="starter-template">
+
+<h1>Cadastrar</h1>
+
+	Nome: <input type="text" name="fullname" id="fullname"><br>
+	Email:<input type="text" name="email" id="email"><br>
+	Senha:<input type="text" name="password" id="password"><br>
+
+
+
+
+
+<div id="resultado" class="resultado">AJAX</div>
+
+
+<button id="tbl" class="btn btn-primary">Enviar </button>
+
+<hr><hr><hr>
+      <h1>Logar</h1>
+
+     Email:<input type="text" name="email" id="emailL"><br>
+	Senha:<input type="text" name="password" id="passwordL"><br>
+     
+     <button id="login" class="btn btn-primary">Login </button>
+     
+     
+     
+     <hr>
+     
+     
+     
+     <button id="mostrar" class="btn btn-primary">get </button>
+     
+     
+     
+     
+     
+     
+     
+      </div>
+
+    </main><!-- /.container -->
+
+ 
+
+<script>
+
+$('#tbl').on('click', function (event) {
+
+   //     alert("Materiais Adicionados!");
+
+    var fullname = $('#fullname').val();
+    var email = $('#email').val();
+    var password = $('#password').val();
+
+
+
+console.log(fullname);
+
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://www.guedex.com/api/users",
+  "method": "POST",
+  "headers": {
+    "Content-Type": "application/json"
+     
+  },
+  "processData": false,
+   "data": '{ "name":"'+fullname+'", "password":"'+password+'","email":"'+email+'" }'
+ 
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+}).fail(function(jqXHR, textStatus, msg){
+         // alert(msg);
+     
+    console.log(jqXHR.responseText); //pega o texto do erro
+     
+         $("#resultado").html(jqXHR.responseText);
+     });
+
+     });
+</script>
+<script src="jquery.cookie.js"></script>
+
+<script>
+    
+    
+    $('#login').on('click', function (event) {
+
+   //     alert("Materiais Adicionados!");
+
+    
+    var emailL = $('#emailL').val();
+    var passwordL = $('#passwordL').val();
+
+
+   
+    var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://www.guedex.com/api/session",
+  "method": "POST",
+  "headers": {
+    "Content-Type": "application/x-www-form-urlencoded" 
+  },
+  "data": {
+    "email": emailL,
+    "password": passwordL
+  }
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+    var login = "Basic " + btoa(emailL + ":" + passwordL);
+    $.cookie('cookieLogin', login);
+    console.log(response.name);
+}).fail(function(jqXHR, textStatus, msg){
+         // alert(msg);
+     
+    console.log(jqXHR.responseText); //pega o texto do erro
+     
+         $("#resultado").html(jqXHR.responseText);
+     });
+    
+    
+    
+    
+     });
+    
+    
+    
+    
+    
+    </script>
+
+
+<script>
+    
+    $('#mostrar').on('click', function (event) {
+
+  
+ 
+
+ var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://www.guedex.com/api/users",
+  "method": "GET",
+  "headers": {
+    "Authorization":  $.cookie('cookieLogin') 
+  } 
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+     
+     alert( $.cookie('cookieLogin') );
+});
+    
+      });
+    
+    </script>
+
+
+
+
+
+
+
+
+</body>
+</html>
