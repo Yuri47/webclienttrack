@@ -156,8 +156,8 @@ $.ajax(settings).done(function (response) {
     
     $('#mostrar').on('click', function (event) {
 
-  
- 
+  console.log("Cookie: " + $.cookie('cookieLogin') );
+    
 
  var settings = {
   "async": true,
@@ -173,6 +173,7 @@ $.ajax(settings).done(function (response) {
   console.log(response);
      
      alert( $.cookie('cookieLogin') );
+
 });
     
       });
