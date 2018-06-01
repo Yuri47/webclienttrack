@@ -1,15 +1,31 @@
 <script>
+
 export default {
   methods: {
     mudarDados() {
-      window.console.log('somebody')
+
+      const payload = {
+        name: 'Alexs',
+        email: 'alexs@gmail.com',
+        level: 'user'
+      }
+      this.$store.commit('CHANGE_USER', payload),
+      this.$store.actions
+
+    }
+
+  },
+  computed: {
+    hasUser() {
+      return this.$store.state.user.name !== ''
     }
   }
+
 }
 </script>
 
 <template id="">
   <div class="">
-    <button @click="mudarDados">Mudar Dados</button>
+    <button :disabled="!hasUser" @click="mudarDados">Mudar Dados</button>
   </div>
 </template>
